@@ -29,6 +29,7 @@ Metoda wprowadzania znaków tajskich dla GTK+ oparta na libthai.
 Summary:	GTK+ 2 Thai input method based on libthai
 Summary(pl.UTF-8):	Metoda wprowadzania znaków tajskich dla GTK+ 2 oparta na libthai
 Group:		Libraries
+Requires(post,postun):	gtk+2 >= 2:2.22
 Requires:	gtk+2 >= 2:2.22
 Requires:	libthai >= 0.1.2
 
@@ -42,6 +43,7 @@ Metoda wprowadzania znaków tajskich dla GTK+ 2 oparta na libthai.
 Summary:	GTK+ 3 Thai input method based on libthai
 Summary(pl.UTF-8):	Metoda wprowadzania znaków tajskich dla GTK+ 3 oparta na libthai
 Group:		Libraries
+Requires(post,postun):	gtk+3 >= 3.0.0
 Requires:	gtk+3 >= 3.0.0
 Requires:	libthai >= 0.1.2
 
@@ -72,12 +74,44 @@ rm -rf $RPM_BUILD_ROOT
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%post -n gtk+2-im-libthai
+%if "%{_lib}" == "lib64"
+%{_bindir}/gtk-query-immodules-2.0-64 > %{_sysconfdir}/gtk64-2.0/gtk.immodules
+%else
+%{_bindir}/gtk-query-immodules-2.0 > %{_sysconfdir}/gtk-2.0/gtk.immodules
+%endif
+
+%postun -n gtk+2-im-libthai
+%if "%{_lib}" == "lib64"
+%{_bindir}/gtk-query-immodules-2.0-64 > %{_sysconfdir}/gtk64-2.0/gtk.immodules
+%else
+%{_bindir}/gtk-query-immodules-2.0 > %{_sysconfdir}/gtk-2.0/gtk.immodules
+%endif
+
+%post -n gtk+3-im-libthai
+%if "%{_lib}" == "lib64"
+%{_bindir}/gtk-query-immodules-3.0-64 --update-cache
+%else
+%{_bindir}/gtk-query-immodules-3.0 --update-cache
+%endif
+
+%postun -n gtk+3-im-libthai
+%if "%{_lib}" == "lib64"
+%{_bindir}/gtk-query-immodules-3.0-64 --update-cache
+%else
+%{_bindir}/gtk-query-immodules-3.0 --update-cache
+%endif
+
+%if %{with gtk2}
 %files -n gtk+2-im-libthai
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS
 %attr(755,root,root) %{_libdir}/gtk-2.0/2.10.0/immodules/im-thai-libthai.so
+%endif
 
+%if %{with gtk3}
 %files -n gtk+3-im-libthai
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS
 %attr(755,root,root) %{_libdir}/gtk-3.0/3.0.0/immodules/im-thai-libthai.so
+%endif
