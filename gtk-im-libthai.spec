@@ -6,12 +6,12 @@
 Summary:	GTK+ Thai input method based on libthai
 Summary(pl.UTF-8):	Metoda wprowadzania znaków tajskich dla GTK+ oparta na libthai
 Name:		gtk-im-libthai
-Version:	0.2.0
+Version:	0.2.1
 Release:	1
 License:	LGPL v2+
 Group:		Libraries
 Source0:	http://linux.thai.net/pub/thailinux/software/libthai/%{name}-%{version}.tar.gz
-# Source0-md5:	12d8ad4afc2d538fe0eaccd80675779a
+# Source0-md5:	3cd86c0a71aa5704fcd5d3ca7c4b6215
 URL:		http://linux.thai.net/projects/libthai
 %{?with_gtk2:BuildRequires:	gtk+2-devel >= 2:2.22}
 %{?with_gtk3:BuildRequires:	gtk+3-devel >= 3.0.0}
